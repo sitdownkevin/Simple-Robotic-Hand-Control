@@ -5,6 +5,8 @@ import asyncio
 import configs
 from utils import encode
 
+time_delay = 2.5
+
 class Kyle:
     def __init__(self, com_port=configs.COM_PORT, baud_rates=configs.BAUD_RATES):
         self.in_connect = False
@@ -40,39 +42,32 @@ class Kyle:
     def send_msg(self, msg=None):
         if msg == None:
             msg = input('msg: ')
-        time.sleep(3)
         if not self.in_connect: return 
-        print(f"Kyle ## 发送消息")
-        is_msg_send = False
-        while not is_msg_send:
-            print(f"Kyle => {msg}")
-            self.ser.write(msg.encode(encoding="utf-8"))
-            is_msg_send = True
-            pass
+        print(f"Kyle ## 发送消息 {msg}")
+        self.ser.write(msg.encode(encoding="utf-8"))
+        time.sleep(time_delay)
+        self.listen_port()
 
-    async def listen_port(self):
-        # if not self.in_connect: return 
-        while True:
-            time.sleep(1)
-            if self.ser.in_waiting == 0:
-                # print('No msg')
-                continue
-            else:
-                data = self.ser.readline().decode()[:-2]
-                print(data)
+    def listen_port(self):
+        print(self.ser.in_waiting)
+        while self.ser.in_waiting > 0:
+            data = self.ser.readline().decode()[:-2]
+            print(data)
 
-async def func(kyle):
-    while True:
-        kyle.send_msg()
-            
-async def main():
+    def end(self):
+        self.ser.close()
+
+data = [2, 3, 5]
+
+def main():
     kyle = Kyle()
     kyle.connect()
 
-    tasks1 = asyncio.gather(kyle.listen_port(), kyle.send_msg(encode(207)), func(kyle))
-    
+    for cmd in data:
+        kyle.send_msg(encode(cmd))
 
+    kyle.end()
 
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    main()

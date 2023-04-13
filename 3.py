@@ -1,32 +1,47 @@
-import asyncio
+import threading
 import time
 
-async def fun1():
-    while True:
-        # await asyncio.sleep(2)
-        time.sleep(2)
-        print('1')
+a = '5'
 
-async def fun2():
-    while True:
-        # await asyncio.sleep(2)
-        time.sleep(3)
-        print('22')
-
-async def func(cur):
-    count = 0
-    while True:
-        count += 1
-        print(cur, count)
-        time.sleep(2)
-        if count == 5:
-            break
+class MyThread(threading.Thread):
+    def __init__(self):
+        threading.Thread.__init__(self)
+        self.thread_read = None
+        self.thread_send = None
+        self.stop_event = threading.Event()
 
 
-async def main():
-    task = asyncio.gather(func('1'), func('2'))
-    print('hello')
+    def start(self):
+        self.thread_read = threading.Thread(target=self.read)
+        self.thread_read.setDaemon(True)
+        self.thread_send = threading.Thread(target=self.send)
+        self.thread_send.setDaemon(True)
+
+        self.thread_read.start()
+        self.thread_send.start()
+
+    def read(self):
+        while not self.stop_event.is_set():
+            print('hello')
+            a = input('Type Here')
+            time.sleep(1)
+            if a == 'q':
+                self.stop()
+    
+    def send(self):
+        while True:
+            print('hello')
+            time.sleep(1)
+            # print(not self.stop_event)
+
+    def stop(self):
+        self.stop_event.set()
+
+if __name__ == "__main__":
+    myThread = MyThread()
+    myThread.start()
+
+    if not myThread.stop_event is None:
+        myThread.stop_event.wait()
         
-
-
-asyncio.run(main())
+    myThread.stop()
