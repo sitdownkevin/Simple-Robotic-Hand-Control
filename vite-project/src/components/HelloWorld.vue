@@ -1,5 +1,7 @@
 <script>
 
+import { darkTheme } from "naive-ui";
+
 export default {
   name: "HelloWorld",
   data() {
@@ -15,7 +17,9 @@ export default {
       open_loading: false,
       close_loading: false,
       socket: null,
-      log: []
+      log: [],
+      theme: null,
+      activeDarkTheme: true
     }
   },
   methods: {
@@ -70,13 +74,18 @@ export default {
       }, 500);
     }
   },
-  mounted() {
+  setup() {
+    return {
+      darkTheme
+    }
   }
 }
 
 </script>
 
 <template>
+  <!-- 隐藏面板 -->
+  <!-- 设置面板 -->
   <n-modal v-model:show="showModal">
     <n-card
       style="width: 600px"
@@ -89,14 +98,17 @@ export default {
       <template #header-extra>
         <div style="cursor: pointer;">Opps</div>
       </template>
-        地址
+        <!-- ws地址 -->
+        <n-h4>地址</n-h4>
         <n-auto-complete
           v-model:value="setting['ws_uri']"
           placeholder="wsi"
           :render-label="renderLabel"
         />
+
     </n-card>
   </n-modal>
+  <!-- Log面板 -->
   <n-modal v-model:show="showRecord">
     <n-card
       style="width: 600px"
@@ -122,6 +134,8 @@ export default {
     <h3 @click="() => {showRecord=true}" style="cursor: pointer;">记录</h3>
     <h3 @click="() => {showPlus=true}" style="cursor: pointer;">...</h3>
   </n-space>
+
+
 
   <h1>{{ cmd }}</h1>
   <n-space vertical>
