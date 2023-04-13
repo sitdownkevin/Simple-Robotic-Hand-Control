@@ -1,8 +1,16 @@
 '''
 @author: sitdownkevin
-@data:   2023.4.12
+@data:   2023.4.16
 '''
+# 判断命令是否合法
+def isCMDLegal(msg):
+    if len(msg) != 10: return False
+    for letter in msg:
+        if not (letter == '0' or letter == '1'):
+            return False
+    return True
 
+# Encode Process
 def decimal_to_ternary(num):
     if num == 0:
         return '00000'
@@ -13,7 +21,7 @@ def decimal_to_ternary(num):
         num //= 3
     ternary = ternary.rjust(5, '0')
     return ternary
-
+# Encode Process
 def string_to_binary(ternaryStr):
     binary_dict = {
         '0': '00',
@@ -26,7 +34,7 @@ def string_to_binary(ternaryStr):
         binary += binary_dict[num]
     
     return binary
-
+# Encode
 def encode(num) -> str:
     return string_to_binary(decimal_to_ternary(num))
 
