@@ -39,7 +39,7 @@ npx vite
 
 Then, the local Control Panel is ready to be accessed
 <div align=center>
-    <img src="./docs/control_panel.png" width="600"></img>
+    <img src="./docs/control_panel.png" width="80%"></img>
     <p>Control Panel</p>
     
 </div>
