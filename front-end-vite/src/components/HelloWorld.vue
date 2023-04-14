@@ -1,6 +1,5 @@
 <script>
-
-import { darkTheme } from "naive-ui";
+import { useMessage, NModal, NCard, NH4, NH3, NAutoComplete, NSpace, NGrid, NGi, NButton } from 'naive-ui'
 
 export default {
   name: "HelloWorld",
@@ -19,7 +18,8 @@ export default {
       socket: null,
       log: [],
       theme: null,
-      activeDarkTheme: true
+      activeDarkTheme: true,
+      message: useMessage(),
     }
   },
   methods: {
@@ -29,10 +29,11 @@ export default {
         this.cmd='0000000000'; 
         this.clear_loading=false;
       }, 100)
+      this.message.success("命令已重置")
     },
     handleSendBtn: async function () {
       if (this.socket == null) {
-        alert("端口未打开")
+        this.message.error("端口未打开")
       }
       else {
         this.send_loading = true
@@ -47,15 +48,16 @@ export default {
       var socket = new WebSocket(this.setting.ws_uri);
       socket.onopen = (e) => {
         socket.send('Kevin')
-        // this.log = 'Open Socket' + '\n'
       }
       socket.onmessage = (e) => {
         console.log('SOCKET OPEN FAIL:' + e.data)
         this.log.push('< ' + e.data)
+        this.message.success('< ' + e.data)
       }
       socket.onerror = (e) => {
         console.log(e)
         this.log.push(e)
+        this.message.error("端口连接失败")
       }
       return socket
     },
@@ -72,12 +74,18 @@ export default {
         this.socket = null
         this.close_loading = false
       }, 500);
-    }
+    },
   },
-  setup() {
-    return {
-      darkTheme
-    }
+  components: {
+    NModal,
+    NCard, 
+    NH4, 
+    NH3, 
+    NSpace,
+    NAutoComplete,
+    NGrid, 
+    NGi,
+    NButton
   }
 }
 
@@ -105,7 +113,6 @@ export default {
           placeholder="wsi"
           :render-label="renderLabel"
         />
-
     </n-card>
   </n-modal>
   <!-- Log面板 -->
@@ -196,8 +203,6 @@ export default {
       </n-gi>
     </n-grid>
   </n-space>
-
-
 
   <n-h4 class="copyright" style="position: absolute; bottom: 5px; left: 50%; transform: translate(-50%, 0);">@sitdownkevin</n-h4>
 
