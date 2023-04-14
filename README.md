@@ -1,5 +1,5 @@
 <div align=center>
-<img src="./front-end-vite/dist/vite.svg" width=70/>
+<img src="./docs/vite.svg" width=70/>
 
 # Simple Robotic Hand Control
 
