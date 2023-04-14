@@ -1,31 +1,55 @@
-# Simple Robotic Hand Control
-##### *THIS IS A PROJECT VERY PERSONALIZED, MAYBE NOT HELPFUL TO YOU*
+<div align=center>
+<img src="./front-end-vite/dist/vite.svg" width=70/>
 
+# Simple Robotic Hand Control
+
+##### *THIS IS A VERY PERSONALIZED PROJECT, MAYBE NOT HELPFUL TO YOU*
+##### WEB PAGE DEMO OF A CONTROL PANEL: https://robatic-control.pages.dev/
+
+</div>
+
+---
 ## Introduction
 
-This is a light project for College Students' Innovation and Entrepreneurship Competition. It is designed for the robotic hand made by our team.
+This is a light project for **College Students' Innovation and Entrepreneurship Competition**. The procedures are designed for controlling a 3D printed robotic hand build by our team.
 
 This repository includes three parts. 
 
-1. **C++ files**: They are in `forUNO` directory, which need to be flashed to Arduino Uno board in Arduino-IDE.
-2. **Server**: There two connections in the Server. First is the connection between Arduino and the Server using port connection,  which is powered by `PySerial` module. Second is the connection between the Server and the Control Panel, which relies on `WebSocket` protocol. 
-3. **Control Panel**: It is a Web Page powered by `Vue.js`. Its design is based on `Naive UI`.
+1. **C++ files**: In the directory *forUNO*. Those files are for Arduino UNO, and to be flashed into Arduino Uno board.
+2. **Server**: There are two main connections in the Server. The first one is the connection between Arduino UNO and the Server through *Port connection* based on [`PySerial`](https://pyserial.readthedocs.io/en/latest/index.html) module. The second one is the connection between the Server and the Control Panel (a Web Page) through *WebSocket protocol* using [`websockets`](https://websockets.readthedocs.io/en/stable/) module. 
+3. **Control Panel**: A simple Web Page powered by [`Vue.js`](https://vuejs.org/). Its UI is based on [`Naive UI`](https://www.naiveui.com/zh-CN/os-theme).
 
 ## How to Use
 
-### **Preparation**: Flash the C++ code into Arduino UNO board
-Use the Arduino-IDE to flash the `forUNO.ino` file into the Arduino-IDE board
-### **Start the Server**: Run the Python files to build WebSocket and Serial connections
-Adjust the configurations (Port, BaudRate, etc.) in `config.py`. Then run the command
+### **Preparation**
+Flash C++ procedures into Arduino UNO board. Use the Arduino-IDE to flash the *forUNO.ino* file into the board
+### **Start the Server**
+Run the Python files. Adjust the configurations (Port, BaudRate, etc.) in `config.py`. Then run the command
 ```python
 python main.py
 ```
-### **Open the Control Panel** Run the Web Page using **vite**
-Open the `front-end-vite` directory in terminal, then run the following command
+### **Open the Control Panel** 
+Open the *front-end-vite* directory in the Terminal, then run the following command.
 ```
 npm install
-```
-```
+
 npx vite
 ```
-*Notice: `Node.js` environment is needed.*
+*Notice: `node.js` environment is needed*
+
+Then, the local Control Panel is ready to be accessed
+<div align=center>
+    <img src="./docs/control_panel.png" width="600"></img>
+    <p>Control Panel</p>
+    
+</div>
+
+## Current Functions
+### **Robotic Hand Control**
+Now we have managed to control each finger of the robotic hand in one dimensions. This process is smooth and robust due to the great performance of Arduino board and fast information transimission ability of Serial communication and WebSocket protocol. 
+
+In the future, we will embed recored command streams into the front-end to offer more demos.
+### **Connections between Parts**
+Now we relies on Serial communication and WebSocket protocol due to limited financial support and skills. In fact, it is possible to replace the server in a PC with a built-in server in the Arduino board. In this way, the communication time will be greatly reduced and the connection will be wireless. 
+
+In the future, we will add a wireless module which suppports WebSockets protocal into the motherboard. All command will be through this module and directly send to the Arduino UNO instead of through a PC server. 
