@@ -33,8 +33,7 @@ class Kyle():
                 self.thread_task.append(task)
             return True
         else:
-            print(time.strftime("%X") + \
-                  ' # ' + "端口打开失败")
+            print(time.strftime("%X") + f'{" #":4} 端口打开失败')
             return False
 
 
@@ -56,8 +55,7 @@ class Kyle():
                 if msg == 'q':
                     break
                 self.msg_list = self.msg_list[1:]
-                print(time.strftime("%X") + \
-                      ' > ' + f'{msg}')
+                print(time.strftime("%X") + f'{" >":4} {msg}')
                 self.ser.write(msg.encode())
                 time.sleep(0.5)
 
@@ -70,8 +68,7 @@ class Kyle():
             try:
                 if self.ser.inWaiting():
                     data = self.ser.readline().decode('utf-8')             
-                    print(time.strftime("%X") + \
-                          ' < ' + data.strip())
+                    print(time.strftime("%X") + f'{" <":4} ' + data.strip())
                     if len(data)==1 and ord(data[len(data)-1])==113: 
                         # 收到字母q，程序退出
                         break

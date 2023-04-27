@@ -9,18 +9,15 @@ from serial_io import Kyle
 async def hello(websocket):
     # Validation
     name = await websocket.recv()
-    print(time.strftime("%X") + \
-          ' << ', name)
+    print(time.strftime("%X") + f'{" <<":4} {name}')
 
-    await websocket.send(f"Hello {name}!")
-    print(time.strftime("%X") + \
-          ' >>', f"Hello {name}!")
-    # Listen Message from Front-End
+    await websocket.send(f"你好 {name}!")
+    print(time.strftime("%X") + f'{" >>":4} Hello {name}!')
+    # Listen Message from Front-End｜
     while True:
         msg = await websocket.recv()
         if utils.isCMDLegal(msg):
-            print(time.strftime("%X") + \
-                  ' <<', msg)
+            print(time.strftime("%X") + f'{" <<":4} {msg}')
             kyle.msg_list.append(msg)
             await websocket.send(f'Legal MSG: {msg}')
         elif msg == 'q':

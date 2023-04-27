@@ -10,10 +10,10 @@
 #define E2 10
 
 void setup() {
-  for (int i=0; i<10; i++) {
+  for (int i=2; i<12; i++) {
     pinMode(i, OUTPUT); 
   }
-  pinMode(LED_BUILTIN, OUTPUT);
+  // pinMode(LED_BUILTIN, OUTPUT);
   Serial.begin(9600);
   Serial.println("Connected@UNO");
 }
@@ -24,14 +24,17 @@ void loop() {
 
     if (isCMDLegal(msg)) {
       Serial.println("MSGReceived@UNO CMDLegal@UNO " + msg);
+      runFingers(msg);
       blink(msg);
     }
     else {
       Serial.println("MSGReceived@UNO CMDILLegal@UNO " + msg);
     }
-    delay(1000);
+    delay(500);
+    initialFingers();
   }
 }
+
 
 void blink(String msg) {
   for (int i=0; i<10; i++) {
@@ -41,6 +44,7 @@ void blink(String msg) {
     delay(50);
   }
 }
+
 
 // 判断信息是否合法
 bool isCMDLegal(String msg) {
@@ -52,3 +56,22 @@ bool isCMDLegal(String msg) {
   }
   return true;
 }
+
+
+void runFingers(String msg) {
+  for (int i=0; i<10; i++) {
+    if (msg[i] == '1') {
+      digitalWrite(i+2, HIGH);
+    }
+  }
+  Serial.println("FingerMoving@UNO");
+}
+
+
+// 初始化所有Output
+void initialFingers() {
+  for (int i=2; i<12; i++) {
+    digitalWrite(i, LOW);
+  }
+}
+
