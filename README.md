@@ -9,6 +9,7 @@
 </div>
 
 ---
+
 ## Introduction
 
 This is a light project for **College Students' Innovation and Entrepreneurship Competition**. The procedures are designed for controlling a 3D printed robotic hand build by our team.
@@ -18,6 +19,11 @@ This repository includes three parts.
 1. **C++ files**: In the directory *forUNO*. Those files are for Arduino UNO, and to be flashed into Arduino Uno board.
 2. **Server**: There are two main connections in the Server. The first one is the connection between Arduino UNO and the Server through *Port connection* based on [`PySerial`](https://pyserial.readthedocs.io/en/latest/index.html) module. The second one is the connection between the Server and the Control Panel (a Web Page) through *WebSocket protocol* using [`websockets`](https://websockets.readthedocs.io/en/stable/) module. 
 3. **Control Panel**: A simple Web Page powered by [`Vue.js`](https://vuejs.org/). Its UI is based on [`Naive UI`](https://www.naiveui.com/zh-CN/os-theme).
+
+## Demo
+<div>
+<img src="demo.gif"/>
+</div>
 
 ## How to Use
 
